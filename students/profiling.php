@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 if (session_status() === PHP_SESSION_NONE) {
      session_start();
@@ -1388,7 +1386,7 @@ function getSavedFormData($step) {
               <?php
                 // Fetch strands from database
                 try {
-                  require_once 'db_connect.php';
+                  require_once __DIR__ . '/../config/database.php';
                   $strand_stmt = $pdo->query("SELECT id, name FROM strands WHERE status = 'active' ORDER BY name");
                   $db_strands = $strand_stmt->fetchAll(PDO::FETCH_ASSOC);
                   
