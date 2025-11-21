@@ -11,7 +11,13 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'chairperson') 
     exit;
 }
 
-$conn = new mysqli("localhost", "root", "", "admission");
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    echo "<div class='alert alert-danger'>System error. Please contact administrator.</div>";
+    exit;
+}
 
 // Get chairperson's assigned program and campus
 $chair_program = $_SESSION['program'] ?? '';

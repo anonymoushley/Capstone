@@ -1,20 +1,30 @@
 <?php
-session_start();
+/**
+ * Exam Interface
+ * 
+ * Displays and handles exam taking for students
+ * 
+ * @package Students
+ */
+
+require_once __DIR__ . '/../config/security.php';
+require_once __DIR__ . '/../config/error_handler.php';
+
+initSecureSession();
+setSecurityHeaders();
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: exam_login.php");
     exit();
 }
 
-if (!isset($_SESSION['user_id'])) {
-    echo "<div class='alert alert-danger'>You are not logged in.</div>";
-    exit;
-}
-
 $applicant_id = $_SESSION['user_id'];
 
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Database connection
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, false);
 }
 
 // Get user information first (needed for UI)
@@ -27,8 +37,10 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
 
-// Get the latest published exam version
-$result = $conn->query("SELECT * FROM exam_versions WHERE is_published = 1 ORDER BY published_at DESC LIMIT 1");
+// Get the latest published exam version (using prepared statement)
+$stmt = $conn->prepare("SELECT * FROM exam_versions WHERE is_published = 1 ORDER BY published_at DESC LIMIT 1");
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
     // Render styled "No Active Exam" UI

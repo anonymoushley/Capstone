@@ -1,14 +1,73 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "admission");
-if ($conn->connect_error) { die('DB error'); }
+/**
+ * Database Audit Tool
+ * 
+ * WARNING: This file should be restricted to administrators only in production.
+ * It provides database integrity checking and should not be publicly accessible.
+ * 
+ * @package Admin
+ */
+
+require_once __DIR__ . '/../config/error_handler.php';
+
+// Security check - only allow admins
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['admin_id']) && !isset($_SESSION['user_id']) || 
+    (isset($_SESSION['role']) && $_SESSION['role'] !== 'admin')) {
+    http_response_code(403);
+    die('Access denied. Admin privileges required.');
+}
+
+// Database connection
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    die('Database connection failed');
+}
 
 header('Content-Type: text/html; charset=utf-8');
 
-function q($conn, $sql) {
-	$res = $conn->query($sql);
-	if (!$res) { return [[], $conn->error]; }
+/**
+ * Safe query execution with prepared statements
+ * @param mysqli $conn Database connection
+ * @param string $sql SQL query (should use placeholders for parameters)
+ * @param string $types Parameter types (optional)
+ * @param array $params Parameters (optional)
+ * @return array [rows, error] tuple
+ */
+function q($conn, $sql, $types = '', $params = []) {
+	// For SELECT queries without parameters, use direct query
+	if (empty($params) && stripos(trim($sql), 'SELECT') === 0) {
+		$res = $conn->query($sql);
+		if (!$res) { return [[], $conn->error]; }
+		$rows = [];
+		while ($row = $res->fetch_assoc()) { $rows[] = $row; }
+		return [$rows, null];
+	}
+	
+	// For queries with parameters, use prepared statements
+	$stmt = $conn->prepare($sql);
+	if (!$stmt) { return [[], $conn->error]; }
+	
+	if (!empty($types) && !empty($params)) {
+		$stmt->bind_param($types, ...$params);
+	}
+	
+	if (!$stmt->execute()) {
+		$error = $stmt->error;
+		$stmt->close();
+		return [[], $error];
+	}
+	
+	$result = $stmt->get_result();
 	$rows = [];
-	while ($row = $res->fetch_assoc()) { $rows[] = $row; }
+	if ($result) {
+		while ($row = $result->fetch_assoc()) { $rows[] = $row; }
+	}
+	$stmt->close();
 	return [$rows, null];
 }
 

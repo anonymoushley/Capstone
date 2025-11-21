@@ -63,7 +63,13 @@ function handleError($message, $log_message = '', $http_code = 500, $redirect = 
 function getDBConnection() {
     static $conn = null;
     if ($conn === null) {
-        $conn = new mysqli('localhost', 'root', '', 'admission');
+        // Use environment variables if available, otherwise use defaults
+        $host = getenv('DB_HOST') ?: 'localhost';
+        $username = getenv('DB_USER') ?: 'root';
+        $password = getenv('DB_PASS') ?: '';
+        $dbname = getenv('DB_NAME') ?: 'admission';
+        
+        $conn = new mysqli($host, $username, $password, $dbname);
         if ($conn->connect_error) {
             throw new Exception("Database connection failed");
         }

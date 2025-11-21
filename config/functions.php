@@ -51,16 +51,10 @@ function sanitize($data) {
  * @return mysqli The database connection
  * @throws Exception If connection fails
  */
-function getDBConnection() {
-    static $conn = null;
-    if ($conn === null) {
-        $conn = new mysqli('localhost', 'root', '', 'admission');
-        if ($conn->connect_error) {
-            throw new Exception("Database connection failed: " . $conn->connect_error);
-        }
-        $conn->set_charset("utf8mb4");
-    }
-    return $conn;
+// Note: getDBConnection() is now in config/error_handler.php to avoid duplication
+// This function is kept for backward compatibility but delegates to error_handler
+if (!function_exists('getDBConnection')) {
+    require_once __DIR__ . '/error_handler.php';
 }
 
 /**

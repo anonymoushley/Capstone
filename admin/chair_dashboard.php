@@ -20,9 +20,12 @@ if (!$chair_program || !$chair_campus) {
 }
 
 // Database connection
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    echo "<div class='alert alert-danger'>System error. Please contact administrator.</div>";
+    exit;
 }
 
 // Total applicants for this chairperson's program and campus
@@ -35,7 +38,8 @@ $totalSql = "SELECT COUNT(DISTINCT pi.id) AS total
              AND (r.id IS NULL OR (r.email_address IS NOT NULL AND r.email_address != ''))";
 $totalStmt = $conn->prepare($totalSql);
 if (!$totalStmt) {
-    die("Prepare failed: " . $conn->error);
+    echo "<div class='alert alert-danger'>Database error. Please contact administrator.</div>";
+    exit;
 }
 $totalStmt->bind_param("ss", $chair_program, $chair_campus);
 $totalStmt->execute();

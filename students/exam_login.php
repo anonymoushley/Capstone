@@ -1,10 +1,23 @@
 <?php
-session_start();
+/**
+ * Exam Login Handler
+ * 
+ * Handles authentication for exam portal (students and admin)
+ * 
+ * @package Students
+ */
+
+require_once __DIR__ . '/../config/security.php';
+require_once __DIR__ . '/../config/error_handler.php';
+
+initSecureSession();
+setSecurityHeaders();
 
 // Database connection
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, true, 'exam_login.php');
 }
 
 $error = '';
@@ -21,8 +34,29 @@ if (isset($_SESSION['saved_email'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email_address'];
-    $password = $_POST['password'];
+    // Verify CSRF token
+    if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+        $_SESSION['login_error'] = "Invalid request. Please try again.";
+        header("Location: exam_login.php");
+        exit();
+    }
+    
+    // Rate limiting for login
+    if (!checkRateLimit('exam_login', 5, 300)) { // 5 attempts per 5 minutes
+        $_SESSION['login_error'] = "Too many login attempts. Please try again later.";
+        header("Location: exam_login.php");
+        exit();
+    }
+    
+    // Validate and sanitize input
+    $email = validateInput($_POST['email_address'] ?? '', 'email', 255);
+    $password = $_POST['password'] ?? '';
+    
+    if ($email === false || empty($password)) {
+        $_SESSION['login_error'] = "Invalid email or password.";
+        header("Location: exam_login.php");
+        exit();
+    }
     
     // Check if it's admin login
     if ($email === 'admin@chmsu.edu.ph') {
@@ -250,6 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         
         <form method="POST" action="">
+            <input type="hidden" name="csrf_token" value="<?= generateCSRFToken() ?>">
             <div class="mb-3">
                 <label class="form-label">Email</label>
                 <input type="email" name="email_address" class="form-control" value="<?= htmlspecialchars($saved_email) ?>" required>

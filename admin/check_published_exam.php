@@ -1,15 +1,34 @@
 <?php
+/**
+ * Check Published Exam API
+ * 
+ * Returns JSON response indicating if there's a published exam for the chairperson
+ * 
+ * @package Admin
+ */
+
+require_once __DIR__ . '/../config/error_handler.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die(json_encode(['error' => 'Database connection failed']));
+// Database connection
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Database connection failed']);
+    exit;
 }
 
+// Authorization check
 if (!isset($_SESSION['chair_id'])) {
-    die(json_encode(['error' => 'Unauthorized access']));
+    http_response_code(403);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Unauthorized access']);
+    exit;
 }
 
 $chairperson_id = $_SESSION['chair_id'];

@@ -8,10 +8,12 @@
  * @var PDO $pdo Global PDO database connection instance
  */
 
-$host = 'localhost';
-$dbname = 'admission';
-$username = 'root';
-$password = '';
+// Use environment variables if available, otherwise use defaults
+// In production, set these via .env file or server environment variables
+$host = getenv('DB_HOST') ?: 'localhost';
+$dbname = getenv('DB_NAME') ?: 'admission';
+$username = getenv('DB_USER') ?: 'root';
+$password = getenv('DB_PASS') ?: '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
