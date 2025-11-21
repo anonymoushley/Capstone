@@ -57,23 +57,11 @@ function getAllSubmittedData($pdo, $user_id) {
         $stmt->execute([$personal_info_id]);
         $data['socio_demographic'] = $stmt->fetch();
         
-        // Debug: Log SQL query and result for socio_demographic
-        if (isset($_GET['debug']) && $_GET['debug'] == '1') {
-            error_log("SQL Query: $sql with personal_info_id: $personal_info_id");
-            error_log("Socio demographic result: " . print_r($data['socio_demographic'], true));
-        }
-        
         // Get academic background
         $sql = "SELECT * FROM academic_background WHERE personal_info_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$personal_info_id]);
         $data['academic_background'] = $stmt->fetch();
-        
-        // Debug: Log SQL query and result for academic_background
-        if (isset($_GET['debug']) && $_GET['debug'] == '1') {
-            error_log("Academic Background SQL Query: $sql with personal_info_id: $personal_info_id");
-            error_log("Academic background result: " . print_r($data['academic_background'], true));
-        }
         
         // Get program application
         $sql = "SELECT * FROM program_application WHERE personal_info_id = ?";
@@ -105,63 +93,6 @@ $step1Complete = !empty($submittedData['personal_info']) && !empty($submittedDat
 $step2Complete = !empty($submittedData['academic_background']);
 $step3Complete = !empty($submittedData['program_application']);
 $steps123Complete = $step1Complete && $step2Complete && $step3Complete;
-
-// Debug: Log the retrieved data (remove this in production)
-if (isset($_GET['debug']) && $_GET['debug'] == '1') {
-    echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
-    echo "<h4>Debug: Retrieved Data</h4>";
-    echo "<h5>Personal Info:</h5>";
-    echo "<pre>";
-    print_r($submittedData['personal_info'] ?? 'No personal info found');
-    echo "</pre>";
-    echo "<h5>Socio Demographic:</h5>";
-    echo "<pre>";
-    print_r($submittedData['socio_demographic'] ?? 'No socio demographic found');
-    echo "</pre>";
-    echo "<h5>Academic Background:</h5>";
-    echo "<pre>";
-    print_r($submittedData['academic_background'] ?? 'No academic background found');
-    echo "</pre>";
-    echo "<h5>Program Application:</h5>";
-    echo "<pre>";
-    print_r($submittedData['program_application'] ?? 'No program application found');
-    echo "</pre>";
-    echo "<h5>Documents:</h5>";
-    echo "<pre>";
-    print_r($submittedData['documents'] ?? 'No documents found');
-    echo "</pre>";
-    
-    echo "<h5>User ID:</h5>";
-    echo "<pre>";
-    print_r($user_id);
-    echo "</pre>";
-    
-    echo "<h5>Personal Info ID:</h5>";
-    echo "<pre>";
-    if (isset($submittedData['personal_info']['id'])) {
-        print_r($submittedData['personal_info']['id']);
-    } else {
-        echo "No personal_info ID found";
-    }
-    echo "</pre>";
-    
-    // Debug specific checkbox fields
-    echo "<h5>Checkbox Field Values:</h5>";
-    $checkboxFields = ['access_computer', 'access_internet', 'access_mobile', 'indigenous_group', 'first_gen_college', 'was_scholar', 'received_honors', 'has_disability'];
-    foreach ($checkboxFields as $field) {
-        $value = $submittedData['socio_demographic'][$field] ?? 'Not found';
-        echo "<p><strong>$field:</strong> " . var_export($value, true) . " (Type: " . gettype($value) . ")</p>";
-    }
-    
-    // Debug academic background fields
-    echo "<h5>Academic Background Field Values:</h5>";
-    $academicFields = ['last_school_attended', 'strand', 'year_graduated', 'g11_1st_avg', 'g11_2nd_avg', 'g12_1st_avg', 'academic_award'];
-    foreach ($academicFields as $field) {
-        $value = $submittedData['academic_background'][$field] ?? 'Not found';
-        echo "<p><strong>$field:</strong> " . var_export($value, true) . " (Type: " . gettype($value) . ")</p>";
-    }
-    echo "</div>";
-}
 
 // Initialize session data if not exists
 if (!isset($_SESSION['form_data'])) {

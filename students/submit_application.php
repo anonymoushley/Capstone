@@ -9,9 +9,7 @@ if (!$step) {
     exit;
 }
 
-function sanitize($data) {
-    return htmlspecialchars(trim($data));
-}
+require_once __DIR__ . '/../config/functions.php';
 
 $personal_info_id = $_SESSION['personal_info_id'] ?? $_POST['personal_info_id'] ?? null;
 if (!$personal_info_id && $step !== 'step5') {

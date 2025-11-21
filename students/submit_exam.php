@@ -245,12 +245,8 @@ $insertAgg->close();
 
 // Persist exam_total_score (percentage) into screening_results
 // Find personal_info_id for this applicant
-$piStmt = $conn->prepare("SELECT personal_info_id FROM registration WHERE id = ?");
-$piStmt->bind_param("i", $applicant_id);
-$piStmt->execute();
-$piStmt->bind_result($personal_info_id);
-$piStmt->fetch();
-$piStmt->close();
+require_once __DIR__ . '/../config/functions.php';
+$personal_info_id = getPersonalInfoIdFromRegistration($conn, $applicant_id);
 
 if (!empty($personal_info_id) && $points_possible > 0) {
     $percentScore = round(($points_earned / $points_possible) * 100, 2);
@@ -386,5 +382,4 @@ echo "<!DOCTYPE html>
 </body>
 </html>";
 
-// Removed duplicate injected modal and dashboard redirect; page above handles messaging and refresh to exam_login
 ?>

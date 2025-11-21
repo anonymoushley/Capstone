@@ -1,5 +1,7 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/security.php';
+initSecureSession();
+setSecurityHeaders();
 
 // Database connection
 $conn = new mysqli('localhost', 'root', '', 'admission');
@@ -396,6 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         
         <form method="POST" action="">
+          <input type="hidden" name="csrf_token" value="<?= generateCSRFToken() ?>">
             <div class="mb-3">
                 <label class="form-label">Email</label>
                 <input type="email" name="email_address" class="form-control" value="<?= htmlspecialchars($saved_email) ?>" required>

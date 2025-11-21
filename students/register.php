@@ -1,9 +1,12 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/security.php';
+initSecureSession();
+setSecurityHeaders();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config/functions.php';
 
 $success_message = '';
 $error_message = '';
@@ -55,11 +58,6 @@ try {
                 $client->setRedirectUri($redirectUri);
                 $client->addScope($google_oauth_config['scopes']);
                 
-                // Debug: Log the redirect URI for troubleshooting
-                error_log("Google OAuth Auth URL Redirect URI: " . $redirectUri);
-                error_log("HTTP_HOST: " . $host);
-                error_log("SCRIPT_NAME: " . $_SERVER['SCRIPT_NAME']);
-                error_log("SCRIPT_PATH: " . $scriptPath);
                 
                 $google_auth_url = $client->createAuthUrl();
             } else {
@@ -83,9 +81,23 @@ if (isset($_GET['google_auth']) && isset($_GET['need_status']) && isset($_SESSIO
 
 // Handle Google OAuth form submission (save form data before OAuth)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['google_oauth_submit'])) {
-    $last_name = trim($_POST['last_name']);
-    $first_name = trim($_POST['first_name']);
-    $app_status = trim($_POST['applicant_status']);
+    // Verify CSRF token
+    if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+        $_SESSION['error_message'] = "Invalid request. Please try again.";
+        header("Location: register.php");
+        exit();
+    }
+    
+    // Rate limiting for registration
+    if (!checkRateLimit('registration', 3, 300)) { // 3 attempts per 5 minutes
+        $_SESSION['error_message'] = "Too many registration attempts. Please try again later.";
+        header("Location: register.php");
+        exit();
+    }
+    
+    $last_name = validateInput(trim($_POST['last_name'] ?? ''), 'string', 100);
+    $first_name = validateInput(trim($_POST['first_name'] ?? ''), 'string', 100);
+    $app_status = validateInput(trim($_POST['applicant_status'] ?? ''), 'string', 100);
     
     // Validate required fields
     if (empty($last_name) || empty($first_name) || empty($app_status)) {
@@ -112,7 +124,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['google_oauth_submit']
 
 // Handle Google OAuth status submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['google_status_submit']) && isset($_SESSION['google_user'])) {
-    $app_status = trim($_POST['applicant_status']);
+    // Verify CSRF token
+    if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+        $_SESSION['error_message'] = "Invalid request. Please try again.";
+        header("Location: register.php");
+        exit();
+    }
+    
+    $app_status = validateInput(trim($_POST['applicant_status'] ?? ''), 'string', 100);
     if (empty($app_status)) {
         $_SESSION['error_message'] = "Please select an application status.";
         header("Location: register.php?google_auth=1&need_status=1");
@@ -144,13 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['google_status_submit'
         }
         
         // Check if user already exists
-        $check_sql = "SELECT id FROM registration WHERE email_address = ?";
-        $check_stmt = $conn->prepare($check_sql);
-        $check_stmt->bind_param("s", $email);
-        $check_stmt->execute();
-        $result = $check_stmt->get_result();
-        
-        if ($result->num_rows > 0) {
+        if (emailExists($conn, $email)) {
             // User exists - show error message instead of logging in
             unset($_SESSION['google_user']);
             unset($_SESSION['applicant_status']);
@@ -162,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['google_status_submit'
         } else {
             // Create new account
             // Generate temporary password (6 characters like regular registration)
-            $temp_password = substr(str_shuffle('abcdefghijkmnopqrstuvwxyz0123456789'), 0, 6);
+            $temp_password = generateTempPassword();
             $hashed_password = password_hash($temp_password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO registration (email_address, password, first_name, last_name, applicant_status) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
@@ -238,15 +251,29 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verify CSRF token
+    if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+        $_SESSION['error_message'] = "Invalid request. Please try again.";
+        header("Location: register.php");
+        exit();
+    }
+    
+    // Rate limiting for registration
+    if (!checkRateLimit('registration', 3, 300)) { // 3 attempts per 5 minutes
+        $_SESSION['error_message'] = "Too many registration attempts. Please try again later.";
+        header("Location: register.php");
+        exit();
+    }
+    
     // Capture and sanitize inputs
-    $last_name = trim($_POST['last_name']);
-    $first_name = trim($_POST['first_name']);
-    $email = trim($_POST['email_address']);
-    $app_status = trim($_POST['applicant_status']); // From radio buttons
+    $last_name = validateInput(trim($_POST['last_name'] ?? ''), 'string', 100);
+    $first_name = validateInput(trim($_POST['first_name'] ?? ''), 'string', 100);
+    $email = validateInput(trim($_POST['email_address'] ?? ''), 'email', 255);
+    $app_status = validateInput(trim($_POST['applicant_status'] ?? ''), 'string', 100);
 
     // Validate required fields
-    if (empty($last_name) || empty($first_name) || empty($email) || empty($app_status)) {
-        $_SESSION['error_message'] = "All fields are required.";
+    if ($last_name === false || $first_name === false || $email === false || $app_status === false) {
+        $_SESSION['error_message'] = "All fields are required and must be valid.";
         header("Location: register.php");
         exit();
     } else {
@@ -254,17 +281,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['applicant_status'] = $app_status;
 
         // Generate password
-        $password = substr(str_shuffle('abcdefghijkmnopqrstuvwxyz0123456789'), 0, 6);
+        $password = generateTempPassword();
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Check for duplicate email
-        $check_sql = "SELECT id FROM registration WHERE email_address = ?";
-        $check_stmt = $conn->prepare($check_sql);
-        $check_stmt->bind_param("s", $email);
-        $check_stmt->execute();
-        $result = $check_stmt->get_result();
-
-        if ($result->num_rows > 0) {
+        if (emailExists($conn, $email)) {
             $_SESSION['error_message'] = "Email address already registered!";
             header("Location: register.php");
             exit();
@@ -1109,6 +1130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <strong>Continue with Google:</strong> Please select your application status to complete registration.
               </div>
               <form method="POST" action="">
+                <input type="hidden" name="csrf_token" value="<?= generateCSRFToken() ?>">
                 <input type="hidden" name="google_status_submit" value="1">
                 <div class="mb-3">
                   <label class="form-label">Application Status</label><br>

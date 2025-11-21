@@ -23,10 +23,6 @@ $filterStrand = $_GET['filter_strand'] ?? '';
 $filterEligibility = $_GET['filter_eligibility'] ?? '';
 $isAjax = isset($_GET['ajax']);
 
-// Debug for AJAX requests
-if ($isAjax) {
-    error_log("AJAX Request - Search: '" . $search . "' | Strand: '" . $filterStrand . "' | Eligibility: '" . $filterEligibility . "'");
-}
 
 
 $sql = "SELECT 
@@ -107,11 +103,6 @@ $params = [$chairProgram, $chairCampus, $chairProgram, $chairCampus, $chairProgr
 if ($search !== '') {
     $search = trim($search);
     
-    // Debug: Log the search term
-    if ($isAjax) {
-        error_log("SEARCH RECEIVED: '" . $search . "'");
-    }
-    
     $searchTerm = '%' . $search . '%';
     $searchLower = '%' . strtolower($search) . '%';
     
@@ -155,10 +146,6 @@ if ($search !== '') {
         $sql .= " AND (" . implode(" OR ", $searchConditions) . ")";
         $params = array_merge($params, $searchParams);
         
-        if ($isAjax) {
-            error_log("Search SQL added: " . implode(" OR ", $searchConditions));
-            error_log("Search params count: " . count($searchParams));
-        }
     }
 }
 

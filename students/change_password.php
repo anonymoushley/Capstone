@@ -12,8 +12,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
 header('Content-Type: application/json');
 
 // Debug: Log received data
-error_log('POST data received: ' . print_r($_POST, true));
-error_log('REQUEST_METHOD: ' . $_SERVER['REQUEST_METHOD']);
 
 // Handle password change
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {

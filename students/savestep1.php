@@ -1,23 +1,7 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 session_start();
 
-// Create a log file
-$log_file = '../debug_log.txt';
-function write_log($message) {
-    global $log_file;
-    $timestamp = date('Y-m-d H:i:s');
-    file_put_contents($log_file, "[$timestamp] $message\n", FILE_APPEND);
-}
-
-write_log("Starting savestep1.php");
-write_log("POST data: " . print_r($_POST, true));
-write_log("FILES data: " . print_r($_FILES, true));
-
-// Check if the request is actually POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    write_log("Error: Not a POST request");
     die(json_encode(['success' => false, 'message' => 'Invalid request method']));
 }
 
@@ -32,7 +16,6 @@ foreach ($required_fields as $field) {
 }
 
 if (!empty($missing_fields)) {
-    write_log("Error: Missing required fields: " . implode(', ', $missing_fields));
     die(json_encode(['success' => false, 'message' => 'Missing required fields: ' . implode(', ', $missing_fields)]));
 }
 
@@ -41,9 +24,7 @@ require_once '../config/database.php';
 // Test database connection
 try {
     $pdo->query("SELECT 1");
-    write_log("Database connection successful");
 } catch (PDOException $e) {
-    write_log("Database connection failed: " . $e->getMessage());
     die(json_encode(['success' => false, 'message' => 'Database connection failed']));
 }
 
@@ -148,13 +129,11 @@ try {
 
         $personal_info_id = $pdo->lastInsertId();
     }
-    write_log("Personal info ID: " . $personal_info_id);
 
     // Link personal_info_id to registration
     if (isset($_SESSION['user_id'])) {
         $stmt = $pdo->prepare("UPDATE registration SET personal_info_id = ? WHERE id = ?");
         $stmt->execute([$personal_info_id, $_SESSION['user_id']]);
-        write_log("Linked personal_info_id $personal_info_id to registration id " . $_SESSION['user_id']);
     }
 
 // Normalize Yes/No values
@@ -251,12 +230,10 @@ foreach ($yes_no_fields as $field) {
     
     // Store personal_info_id in session
     $_SESSION['personal_info_id'] = $personal_info_id;
-    write_log("Session data after save: " . print_r($_SESSION, true));
     
     echo json_encode(['success' => true, 'message' => 'Step 1 data saved successfully', 'personal_info_id' => $personal_info_id]);
 } catch (Exception $e) {
     $pdo->rollBack();
-    write_log("Error occurred: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
 }
 ?>

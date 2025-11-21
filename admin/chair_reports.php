@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once '../config/database.php';
+require_once '../config/functions.php';
 
 // Check if user is logged in as chairperson
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'chairperson') {
@@ -19,29 +20,6 @@ $chair_campus = $_SESSION['campus'] ?? '';
 if (!$chair_program || !$chair_campus) {
     echo "<div class='alert alert-danger'>Chairperson program or campus is not defined. Please contact administrator.</div>";
     exit;
-}
-
-// Function to calculate plus factor based on strand and NCII status
-function calculatePlusFactor($strand, $ncii_status) {
-    $strand = strtolower(trim($strand ?? ''));
-    $ncii_status = strtolower(trim($ncii_status ?? ''));
-    
-    // Check if applicant has NCII certificate (status is 'Accepted')
-    $has_ncii = ($ncii_status === 'accepted');
-    
-    // Check if applicant is from STEM or specific TVL strands (TVL-ICT, TVL-CSS, TVL-PROGRAMMING)
-    $is_stem_it = in_array($strand, ['stem', 'tvl-ict', 'tvl-css', 'tvl-programming', 'stem/it']);
-    
-    // Apply plus factor logic
-    if ($is_stem_it && $has_ncii) {
-        return 5; // STEM/IT strand + NCII = 5
-    } elseif ($is_stem_it && !$has_ncii) {
-        return 3; // STEM/IT strand only = 3
-    } elseif (!$is_stem_it && $has_ncii) {
-        return 2; // NCII only = 2
-    } else {
-        return 0; // None both = 0
-    }
 }
 
 // SQL query with proper FROM and JOINs

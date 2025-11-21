@@ -7,10 +7,6 @@ header('Content-Type: application/json');
 // Get personal_info_id from session or POST data
 $personal_info_id = $_SESSION['personal_info_id'] ?? $_POST['personal_info_id'] ?? null;
 
-// Debug logging
-error_log("Save Documents Debug - Session personal_info_id: " . ($_SESSION['personal_info_id'] ?? 'not set'));
-error_log("Save Documents Debug - POST personal_info_id: " . ($_POST['personal_info_id'] ?? 'not set'));
-error_log("Save Documents Debug - Final personal_info_id: " . ($personal_info_id ?? 'not set'));
 
 if (!$personal_info_id) {
     echo json_encode(['success' => false, 'message' => 'Personal information not found']);
@@ -109,7 +105,6 @@ try {
 
     if ($existing_documents) {
         // Update existing documents - only update fields that have new files, preserve others
-        error_log("Updating existing documents for personal_info_id: " . $personal_info_id);
         
         // Build dynamic UPDATE query - only update fields that have new files
         $updateFields = [];
@@ -147,15 +142,9 @@ try {
             $sql = "UPDATE documents SET " . implode(", ", $updateFields) . " WHERE personal_info_id = ?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute($updateValues);
-            error_log("Update executed, affected rows: " . $stmt->rowCount());
-            error_log("Updated fields: " . implode(", ", array_map(function($f) { return preg_replace('/\s*=\s*\?/', '', $f); }, $updateFields)));
-        } else {
-            error_log("No new files to update, skipping database update");
         }
     } else {
         // Insert new documents
-        error_log("Inserting new documents for personal_info_id: " . $personal_info_id);
-        error_log("Values: g11_1st=$g11_1st, g11_2nd=$g11_2nd, g12_1st=$g12_1st, ncii=$ncii, guidance_cert=$guidance_cert, additional_file=$additional_file");
         
         $stmt = $pdo->prepare("INSERT INTO documents (
             personal_info_id, g11_1st, g11_2nd, g12_1st,
@@ -250,7 +239,6 @@ function deleteFiles($fileNames, $uploadDir) {
         $filePath = $uploadDir . $fileName;
         if (file_exists($filePath)) {
             @unlink($filePath);
-            error_log("Deleted file: " . $filePath);
         }
     }
 }

@@ -2,6 +2,7 @@
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config/functions.php';
 $google_oauth_config = require __DIR__ . '/../config/google_oauth.php';
 
 // Check if Google Client class is available
@@ -48,18 +49,8 @@ try {
     $client->setRedirectUri($finalRedirectUri);
     $client->addScope($google_oauth_config['scopes']);
     
-    // Debug: Log the redirect URI for troubleshooting
-    error_log("Google OAuth Redirect URI: " . $finalRedirectUri);
-    error_log("HTTP_HOST: " . $host);
-    error_log("SCRIPT_NAME: " . $_SERVER['SCRIPT_NAME']);
-    error_log("SCRIPT_PATH: " . $scriptPath);
-
     // Handle the callback
     if (isset($_GET['code'])) {
-        // Debug: Log received parameters
-        error_log("Google OAuth Callback - Code received");
-        error_log("Redirect URI used: " . $finalRedirectUri);
-        error_log("Request URI: " . $_SERVER['REQUEST_URI']);
         
         // Exchange authorization code for access token
         $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
@@ -143,7 +134,7 @@ try {
                 : $lastName;
             
             // Generate temporary password (6 characters like regular registration)
-            $temp_password = substr(str_shuffle('abcdefghijkmnopqrstuvwxyz0123456789'), 0, 6);
+            $temp_password = generateTempPassword();
             $hashed_password = password_hash($temp_password, PASSWORD_DEFAULT);
             
             // Insert new record

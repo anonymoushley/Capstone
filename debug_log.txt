@@ -1,0 +1,1260 @@
+[2025-11-21 03:35:29] Starting savestep1.php
+[2025-11-21 03:35:29] POST data: Array
+(
+    [last_name] => Polinar
+    [first_name] => John Michael
+    [middle_name] => Leonico
+    [age] => 19
+    [birth_date] => 2006-01-26
+    [sex] => Male
+    [contact_number] => 9162653377
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064531000
+    [city_name] => City of Victorias
+    [barangay] => 064531016
+    [barangay_name] => Barangay XIII
+    [street] => Sitio So-ol 
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Alive; Away
+    [father_education] => High School Diploma
+    [father_employment] => Employed Full-Time
+    [mother_status] => Alive; Away
+    [mother_education] => High School Diploma
+    [mother_employment] => Employed Part-Time
+    [siblings] => None
+    [living_with] => Relatives
+    [access_computer] => No
+    [access_internet] => No
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 03:35:29] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => IMG_20251031_211909_200.jpg
+            [full_path] => IMG_20251031_211909_200.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpFF1.tmp
+            [error] => 0
+            [size] => 108395
+        )
+
+)
+
+[2025-11-21 03:35:29] Database connection successful
+[2025-11-21 03:35:29] Personal info ID: 162
+[2025-11-21 03:35:29] Linked personal_info_id 162 to registration id 20261119
+[2025-11-21 03:35:29] Session data after save: Array
+(
+    [user_id] => 20261119
+    [email] => johnpolinar26@gmail.com
+    [name] => John Michael Polinar
+    [role] => student
+    [success_message] => Registration successful! Welcome to CHMSU Application System.
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 162
+)
+
+[2025-11-21 03:35:53] Starting savestep1.php
+[2025-11-21 03:35:53] POST data: Array
+(
+    [last_name] => DusaraN
+    [first_name] => Xervy
+    [middle_name] => Burlan
+    [age] => 19
+    [birth_date] => 2006-09-27
+    [sex] => Male
+    [contact_number] => 9668026781
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064526000
+    [city_name] => City of Silay
+    [barangay] => 064526007
+    [barangay_name] => Barangay VI Pob.
+    [street] => Crossing Malisbog 
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Deceased
+    [father_education] => Bachelor's Degree
+    [father_employment] => Employed Part-Time
+    [mother_status] => Alive; at Home
+    [mother_education] => High School Diploma
+    [mother_employment] => Employed Full-Time
+    [siblings] => One
+    [living_with] => One parent only
+    [access_computer] => Yes
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 03:35:53] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound6314874881989254791.webp
+            [full_path] => inbound6314874881989254791.webp
+            [type] => image/webp
+            [tmp_name] => C:\xampp\tmp\php5383.tmp
+            [error] => 0
+            [size] => 160144
+        )
+
+)
+
+[2025-11-21 03:35:53] Database connection successful
+[2025-11-21 03:35:53] Personal info ID: 163
+[2025-11-21 03:35:53] Linked personal_info_id 163 to registration id 20261118
+[2025-11-21 03:35:53] Session data after save: Array
+(
+    [user_id] => 20261118
+    [email] => dusaranx@gmail.com
+    [name] => Xervy Dusara
+    [role] => student
+    [success_message] => Registration successful! Welcome to CHMSU Application System.
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 163
+)
+
+[2025-11-21 03:36:35] Starting savestep1.php
+[2025-11-21 03:36:35] POST data: Array
+(
+    [last_name] => Bibanco
+    [first_name] => Justine
+    [middle_name] => Mongado
+    [age] => 25
+    [birth_date] => 2000-11-04
+    [sex] => Male
+    [contact_number] => 9321456789
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064528000
+    [city_name] => City of Talisay
+    [barangay] => 064528002
+    [barangay_name] => Cabatangan
+    [street] => Hope village
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Alive; at Home
+    [father_education] => Bachelor's Degree
+    [father_employment] => Employed Full-Time
+    [mother_status] => Alive; Away
+    [mother_education] => Bachelor's Degree
+    [mother_employment] => Employed Full-Time
+    [siblings] => One
+    [living_with] => One parent only
+    [access_computer] => Yes
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => No
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 03:36:35] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound8803561460676553639.jpg
+            [full_path] => inbound8803561460676553639.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php5960.tmp
+            [error] => 0
+            [size] => 2668063
+        )
+
+)
+
+[2025-11-21 03:36:35] Database connection successful
+[2025-11-21 03:36:35] Personal info ID: 164
+[2025-11-21 03:36:35] Linked personal_info_id 164 to registration id 20261117
+[2025-11-21 03:36:35] Session data after save: Array
+(
+    [user_id] => 20261117
+    [email] => justinebibanco11@gmail.com
+    [name] => Justine Bibanco
+    [role] => student
+    [success_message] => Registration successful! Welcome to CHMSU Application System.
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 164
+)
+
+[2025-11-21 03:36:35] Starting savestep1.php
+[2025-11-21 03:36:35] POST data: Array
+(
+    [last_name] => Robles
+    [first_name] => Paul Benedict
+    [middle_name] => Llada
+    [age] => 20
+    [birth_date] => 2005-06-09
+    [sex] => Male
+    [contact_number] => 0193925552
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064526000
+    [city_name] => City of Silay
+    [barangay] => 064526011
+    [barangay_name] => Guinhalaran
+    [street] => Carmela phase 4 
+    [marital_status] => Single
+    [religion] => Others
+    [orientation] => Heterosexual
+    [father_status] => Alive; at Home
+    [father_education] => High School Diploma
+    [father_employment] => Unemployed
+    [mother_status] => Alive; at Home
+    [mother_education] => No High School Diploma
+    [mother_employment] => Employed Full-Time
+    [siblings] => None
+    [living_with] => Both parents
+    [access_computer] => Yes
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => Yes
+    [was_scholar] => No
+    [received_honors] => No
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 03:36:35] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => orca-image-246199668.jpeg.jpeg
+            [full_path] => orca-image-246199668.jpeg.jpeg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php1687.tmp
+            [error] => 0
+            [size] => 92648
+        )
+
+)
+
+[2025-11-21 03:36:35] Database connection successful
+[2025-11-21 03:36:35] Personal info ID: 165
+[2025-11-21 03:36:35] Linked personal_info_id 165 to registration id 20261122
+[2025-11-21 03:36:35] Session data after save: Array
+(
+    [user_id] => 20261122
+    [email] => paulrobles373@gmail.com
+    [name] => Paul Benedict Robles
+    [role] => student
+    [success_message] => Registration successful! Welcome to CHMSU Application System.
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 165
+)
+
+[2025-11-21 03:37:32] Starting savestep1.php
+[2025-11-21 03:37:32] POST data: Array
+(
+)
+
+[2025-11-21 03:37:32] FILES data: Array
+(
+)
+
+[2025-11-21 03:37:32] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 03:37:32] Starting savestep1.php
+[2025-11-21 03:37:32] POST data: Array
+(
+)
+
+[2025-11-21 03:37:32] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => 1000014373.jpg
+            [full_path] => 1000014373.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 03:37:32] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 03:37:43] Starting savestep1.php
+[2025-11-21 03:37:43] POST data: Array
+(
+    [last_name] => Hilo
+    [first_name] => Carlo
+    [middle_name] => 
+    [age] => 19
+    [birth_date] => 2006-04-28
+    [sex] => Male
+    [contact_number] => 9459660363
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064526000
+    [city_name] => City of Silay
+    [barangay] => 064526005
+    [barangay_name] => Barangay IV (Pob.)
+    [street] => Hda. Panaogao 3 Marland 
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Homosexual
+    [father_status] => Alive; Away
+    [father_education] => Graduate Degree
+    [father_employment] => Unemployed
+    [mother_status] => Alive; Away
+    [mother_education] => High School Diploma
+    [mother_employment] => Employed Part-Time
+    [siblings] => One
+    [living_with] => Both parents
+    [access_computer] => Yes
+    [access_internet] => No
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => Yes
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => Yes
+    [disability_detail] => Cleft Palate
+)
+
+[2025-11-21 03:37:43] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => WinLogo.jpg
+            [full_path] => WinLogo.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php2394.tmp
+            [error] => 0
+            [size] => 22079
+        )
+
+)
+
+[2025-11-21 03:37:43] Database connection successful
+[2025-11-21 03:37:43] Personal info ID: 166
+[2025-11-21 03:37:43] Linked personal_info_id 166 to registration id 20261123
+[2025-11-21 03:37:43] Session data after save: Array
+(
+    [user_id] => 20261123
+    [email] => carlohilo0000@gmail.com
+    [name] => Carlo Hilo
+    [role] => student
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 166
+)
+
+[2025-11-21 03:39:15] Starting savestep1.php
+[2025-11-21 03:39:15] POST data: Array
+(
+    [last_name] => Bivoso
+    [first_name] => Meryl
+    [middle_name] => Batiles
+    [age] => 21
+    [birth_date] => 2004-09-05
+    [sex] => Female
+    [contact_number] => 9956255413
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064502000
+    [city_name] => City of Bago
+    [barangay] => 064502011
+    [barangay_name] => Dulao
+    [street] => Purok Ramos
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Alive; at Home
+    [father_education] => High School Diploma
+    [father_employment] => Employed Full-Time
+    [mother_status] => Alive; at Home
+    [mother_education] => High School Diploma
+    [mother_employment] => Unemployed
+    [siblings] => Two or more
+    [living_with] => Both parents
+    [access_computer] => Yes
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => Yes
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 03:39:15] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => 1000014373.jpg
+            [full_path] => 1000014373.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php49CA.tmp
+            [error] => 0
+            [size] => 2811167
+        )
+
+)
+
+[2025-11-21 03:39:15] Database connection successful
+[2025-11-21 03:39:15] Personal info ID: 167
+[2025-11-21 03:39:15] Linked personal_info_id 167 to registration id 20261121
+[2025-11-21 03:39:15] Session data after save: Array
+(
+    [user_id] => 20261121
+    [email] => merylbivoso@gmail.com
+    [name] => Meryl Bivoso
+    [role] => student
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 167
+)
+
+[2025-11-21 03:39:54] Starting savestep1.php
+[2025-11-21 03:39:54] POST data: Array
+(
+)
+
+[2025-11-21 03:39:54] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => 1000014373.jpg
+            [full_path] => 1000014373.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 03:39:54] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 03:40:41] Starting savestep1.php
+[2025-11-21 03:40:41] POST data: Array
+(
+)
+
+[2025-11-21 03:40:41] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound7256475445192475277.jpg
+            [full_path] => inbound7256475445192475277.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 03:40:41] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 03:41:04] Starting savestep1.php
+[2025-11-21 03:41:04] POST data: Array
+(
+    [last_name] => alegora
+    [first_name] => jian louise
+    [middle_name] => Berueda
+    [age] => 20
+    [birth_date] => 2005-08-20
+    [sex] => Female
+    [contact_number] => 9459667388
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064502000
+    [city_name] => City of Bago
+    [barangay] => 064502022
+    [barangay_name] => Tabunan
+    [street] => Purok Kabatuhan
+    [marital_status] => Single
+    [religion] => None
+    [orientation] => Heterosexual
+    [father_status] => Alive; at Home
+    [father_education] => Bachelor's Degree
+    [father_employment] => Unemployed
+    [mother_status] => Alive; at Home
+    [mother_education] => Bachelor's Degree
+    [mother_employment] => Employed Full-Time
+    [siblings] => One
+    [living_with] => Both parents
+    [access_computer] => Yes
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 03:41:04] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => unnamed.jpg
+            [full_path] => unnamed.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php1418.tmp
+            [error] => 0
+            [size] => 31000
+        )
+
+)
+
+[2025-11-21 03:41:04] Database connection successful
+[2025-11-21 03:41:04] Personal info ID: 168
+[2025-11-21 03:41:04] Linked personal_info_id 168 to registration id 20261125
+[2025-11-21 03:41:04] Session data after save: Array
+(
+    [user_id] => 20261125
+    [email] => jialegora@gmail.com
+    [name] => jian louise alegora
+    [role] => student
+    [success_message] => Registration successful! Welcome to CHMSU Application System.
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 168
+)
+
+[2025-11-21 03:51:18] Starting savestep1.php
+[2025-11-21 03:51:18] POST data: Array
+(
+)
+
+[2025-11-21 03:51:18] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound7135949123137436101.jpg
+            [full_path] => inbound7135949123137436101.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 03:51:18] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 03:57:33] Starting savestep1.php
+[2025-11-21 03:57:33] POST data: Array
+(
+    [last_name] => Perez
+    [first_name] => jet Eliseo
+    [middle_name] => 
+    [age] => 20
+    [birth_date] => 2005-09-09
+    [sex] => Male
+    [contact_number] => 0966924530
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064504000
+    [city_name] => City of Cadiz
+    [barangay] => 064504005
+    [barangay_name] => Barangay 3 Pob.
+    [street] => Purok Sea Breeze 
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Alive; at Home
+    [father_education] => High School Diploma
+    [father_employment] => Employed Full-Time
+    [mother_status] => Alive; at Home
+    [mother_education] => High School Diploma
+    [mother_employment] => Employed Full-Time
+    [siblings] => Two or more
+    [living_with] => Both parents
+    [access_computer] => No
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 03:57:33] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => 184.jpg
+            [full_path] => 184.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php49A7.tmp
+            [error] => 0
+            [size] => 155611
+        )
+
+)
+
+[2025-11-21 03:57:33] Database connection successful
+[2025-11-21 03:57:33] Personal info ID: 169
+[2025-11-21 03:57:33] Linked personal_info_id 169 to registration id 20261120
+[2025-11-21 03:57:33] Session data after save: Array
+(
+    [user_id] => 20261120
+    [email] => jeteliseoperez@gmail.com
+    [name] => jet Eliseo Perez
+    [role] => student
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 169
+)
+
+[2025-11-21 04:26:49] Starting savestep1.php
+[2025-11-21 04:26:49] POST data: Array
+(
+    [last_name] => Subaldo
+    [first_name] => aidan
+    [middle_name] => -
+    [age] => 18
+    [birth_date] => 2007-06-14
+    [sex] => Male
+    [contact_number] => 9671742973
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064526000
+    [city_name] => City of Silay
+    [barangay] => 064526006
+    [barangay_name] => Barangay V (Pob.)
+    [street] => Purok Tinapok
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Deceased
+    [father_education] => No High School Diploma
+    [father_employment] => Unemployed
+    [mother_status] => Alive; Away
+    [mother_education] => High School Diploma
+    [mother_employment] => Employed Full-Time
+    [siblings] => One
+    [living_with] => Relatives
+    [access_computer] => Yes
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => Yes
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 04:26:49] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => 584449066_1068033928668142_1073140621849836137_n.jpg
+            [full_path] => 584449066_1068033928668142_1073140621849836137_n.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php1623.tmp
+            [error] => 0
+            [size] => 38039
+        )
+
+)
+
+[2025-11-21 04:26:49] Database connection successful
+[2025-11-21 04:26:49] Personal info ID: 170
+[2025-11-21 04:26:49] Linked personal_info_id 170 to registration id 20261078
+[2025-11-21 04:26:49] Session data after save: Array
+(
+    [user_id] => 20261078
+    [email] => aidansubaldo061407@gmail.com
+    [name] => aidan Subaldo
+    [role] => student
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 170
+)
+
+[2025-11-21 04:29:34] Starting savestep1.php
+[2025-11-21 04:29:34] POST data: Array
+(
+    [last_name] => Ferrer
+    [first_name] => Janfrel
+    [middle_name] => Aplaon
+    [age] => 20
+    [birth_date] => 2004-12-14
+    [sex] => Male
+    [contact_number] => 9813447335
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064527000
+    [city_name] => City of Sipalay
+    [barangay] => 064527014
+    [barangay_name] => Maricalum
+    [street] => Buenafe
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Alive; at Home
+    [father_education] => High School Diploma
+    [father_employment] => Employed Part-Time
+    [mother_status] => Alive; at Home
+    [mother_education] => High School Diploma
+    [mother_employment] => Employed Full-Time
+    [siblings] => Two or more
+    [living_with] => Both parents
+    [access_computer] => Yes
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 04:29:34] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound4203676526291669242.jpg
+            [full_path] => inbound4203676526291669242.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9938.tmp
+            [error] => 0
+            [size] => 26009
+        )
+
+)
+
+[2025-11-21 04:29:34] Database connection successful
+[2025-11-21 04:29:34] Personal info ID: 171
+[2025-11-21 04:29:34] Linked personal_info_id 171 to registration id 20261127
+[2025-11-21 04:29:34] Session data after save: Array
+(
+    [user_id] => 20261127
+    [email] => janfrelferrer@gmail.com
+    [name] => Janfrel Ferrer
+    [role] => student
+    [success_message] => Registration successful! Welcome to CHMSU Application System.
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 171
+)
+
+[2025-11-21 04:38:38] Starting savestep1.php
+[2025-11-21 04:38:38] POST data: Array
+(
+    [last_name] => Labto
+    [first_name] => Kenneth jhey
+    [middle_name] => Majan
+    [age] => 18
+    [birth_date] => 2007-06-04
+    [sex] => Male
+    [contact_number] => 9507781544
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064508000
+    [city_name] => Enrique B. Magalona
+    [barangay] => 064508002
+    [barangay_name] => Alicante
+    [street] => N/A
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Heterosexual
+    [father_status] => Deceased
+    [father_education] => No High School Diploma
+    [father_employment] => Unemployed
+    [mother_status] => Alive; at Home
+    [mother_education] => No High School Diploma
+    [mother_employment] => Unemployed
+    [siblings] => Two or more
+    [living_with] => One parent only
+    [access_computer] => No
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => Yes
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 04:38:38] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => a69a1dc8b4ea0798feef1affc7689369.jpg
+            [full_path] => a69a1dc8b4ea0798feef1affc7689369.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpE5D6.tmp
+            [error] => 0
+            [size] => 55268
+        )
+
+)
+
+[2025-11-21 04:38:38] Database connection successful
+[2025-11-21 04:38:38] Personal info ID: 172
+[2025-11-21 04:38:38] Linked personal_info_id 172 to registration id 20261128
+[2025-11-21 04:38:38] Session data after save: Array
+(
+    [user_id] => 20261128
+    [email] => labtokenneth@gmail.com
+    [name] => Kenneth jhey Labto
+    [role] => student
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 172
+)
+
+[2025-11-21 04:40:43] Starting savestep1.php
+[2025-11-21 04:40:43] POST data: Array
+(
+)
+
+[2025-11-21 04:40:43] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound6880631379403317147.jpg
+            [full_path] => inbound6880631379403317147.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 04:40:43] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 04:41:08] Starting savestep1.php
+[2025-11-21 04:41:08] POST data: Array
+(
+)
+
+[2025-11-21 04:41:08] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound6880631379403317147.jpg
+            [full_path] => inbound6880631379403317147.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 04:41:08] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 04:41:47] Starting savestep1.php
+[2025-11-21 04:41:47] POST data: Array
+(
+)
+
+[2025-11-21 04:41:47] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound6880631379403317147.jpg
+            [full_path] => inbound6880631379403317147.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 04:41:47] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 04:42:53] Starting savestep1.php
+[2025-11-21 04:42:53] POST data: Array
+(
+)
+
+[2025-11-21 04:42:53] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound6880631379403317147.jpg
+            [full_path] => inbound6880631379403317147.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 04:42:53] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 04:44:41] Starting savestep1.php
+[2025-11-21 04:44:41] POST data: Array
+(
+)
+
+[2025-11-21 04:44:41] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound7770168145979554489.jpg
+            [full_path] => inbound7770168145979554489.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 04:44:41] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 04:46:53] Starting savestep1.php
+[2025-11-21 04:46:53] POST data: Array
+(
+)
+
+[2025-11-21 04:46:53] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => inbound7770168145979554489.jpg
+            [full_path] => inbound7770168145979554489.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 3
+            [size] => 0
+        )
+
+)
+
+[2025-11-21 04:46:53] Error: Missing required fields: last_name, first_name, birth_date, age, sex, contact_number, region_name, province_name, city_name, barangay_name, street
+[2025-11-21 04:50:48] Starting savestep1.php
+[2025-11-21 04:50:48] POST data: Array
+(
+    [last_name] => Sotela
+    [first_name] => Michael
+    [middle_name] => tumlos
+    [age] => 18
+    [birth_date] => 2006-12-26
+    [sex] => Male
+    [contact_number] => 9640923124
+    [region] => 060000000
+    [region_name] => Western Visayas
+    [province] => 064500000
+    [province_name] => Negros Occidental
+    [city] => 064508000
+    [city_name] => Enrique B. Magalona
+    [barangay] => 064508013
+    [barangay_name] => Madalag
+    [street] => purok 3
+    [marital_status] => Single
+    [religion] => Christianity
+    [orientation] => Homosexual
+    [father_status] => Alive; at Home
+    [father_education] => High School Diploma
+    [father_employment] => Employed Full-Time
+    [mother_status] => Alive; at Home
+    [mother_education] => High School Diploma
+    [mother_employment] => Employed Full-Time
+    [siblings] => Two or more
+    [living_with] => Both parents
+    [access_computer] => No
+    [access_internet] => Yes
+    [access_mobile] => Yes
+    [indigenous_group] => No
+    [first_gen_college] => No
+    [was_scholar] => No
+    [received_honors] => No
+    [has_disability] => No
+    [disability_detail] => 
+)
+
+[2025-11-21 04:50:48] FILES data: Array
+(
+    [id_picture] => Array
+        (
+            [name] => gc.jpg
+            [full_path] => gc.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpC37.tmp
+            [error] => 0
+            [size] => 32629
+        )
+
+)
+
+[2025-11-21 04:50:48] Database connection successful
+[2025-11-21 04:50:48] Personal info ID: 173
+[2025-11-21 04:50:48] Linked personal_info_id 173 to registration id 20261129
+[2025-11-21 04:50:48] Session data after save: Array
+(
+    [user_id] => 20261129
+    [email] => sotelamichael6@gmail.com
+    [name] => Michael Sotela
+    [role] => student
+    [form_data] => Array
+        (
+            [step1] => Array
+                (
+                )
+
+            [step2] => Array
+                (
+                )
+
+            [step3] => Array
+                (
+                )
+
+            [step4] => Array
+                (
+                )
+
+        )
+
+    [personal_info_id] => 173
+)
+

@@ -93,20 +93,34 @@ if (isset($_GET['action']) && $_GET['action'] == 'publish') {
     $id = intval($_GET['id']);
     $force = isset($_GET['force']) && $_GET['force'] == 1;
 
-    // Check if there's already a published exam
-    $published_check = $conn->query("SELECT id, version_name FROM exam_versions WHERE is_published = 1 AND is_archived = 0 AND chair_id = $chairperson_id");
+    // Check if there's already a published exam (using prepared statement)
+    $published_stmt = $conn->prepare("SELECT id, version_name FROM exam_versions WHERE is_published = 1 AND is_archived = 0 AND chair_id = ?");
+    $published_stmt->bind_param("i", $chairperson_id);
+    $published_stmt->execute();
+    $published_check = $published_stmt->get_result();
 
     if ($published_check->num_rows > 0 && !$force) {
         // Show confirmation modal for replacing published exam
         $published_exam = $published_check->fetch_assoc();
-        $pending_exam = $conn->query("SELECT version_name FROM exam_versions WHERE id = $id")->fetch_assoc();
+        $pending_stmt = $conn->prepare("SELECT version_name FROM exam_versions WHERE id = ?");
+        $pending_stmt->bind_param("i", $id);
+        $pending_stmt->execute();
+        $pending_result = $pending_stmt->get_result();
+        $pending_exam = $pending_result->fetch_assoc();
+        $pending_stmt->close();
         header("Location: chair_main.php?page=exam_versions&pending_publish=" . $id . "&current_published=" . $published_exam['id'] . "&current_name=" . urlencode($published_exam['version_name']) . "&pending_name=" . urlencode($pending_exam['version_name']));
+        $published_stmt->close();
         exit;
     }
 
-    // If force is true, unpublish the current exam first
+    // If force is true, unpublish the current exam first (using prepared statement)
     if ($force && $published_check->num_rows > 0) {
-        $conn->query("UPDATE exam_versions SET status = 'Unpublished', is_published = 0, published_at = NULL WHERE is_published = 1 AND chair_id = $chairperson_id");
+        $unpublish_stmt = $conn->prepare("UPDATE exam_versions SET status = 'Unpublished', is_published = 0, published_at = NULL WHERE is_published = 1 AND chair_id = ?");
+        $unpublish_stmt->bind_param("i", $chairperson_id);
+        $unpublish_stmt->execute();
+        $unpublish_stmt->close();
+    }
+    $published_stmt->close();
     }
 
     $stmt = $conn->prepare("UPDATE exam_versions SET status = 'Published', is_published = 1, published_at = NOW() WHERE id = ? AND chair_id = ?");
@@ -508,7 +522,10 @@ $versions = $stmt->get_result();
       </div>
       <div class="modal-body">
         <?php
-        $archived_versions = $conn->query("SELECT * FROM exam_versions WHERE is_archived = 1 AND chair_id = $chairperson_id ORDER BY id DESC");
+        $archived_stmt = $conn->prepare("SELECT * FROM exam_versions WHERE is_archived = 1 AND chair_id = ? ORDER BY id DESC");
+        $archived_stmt->bind_param("i", $chairperson_id);
+        $archived_stmt->execute();
+        $archived_versions = $archived_stmt->get_result();
         if ($archived_versions && $archived_versions->num_rows > 0): ?>
         <div class="row">
             <?php while($row = $archived_versions->fetch_assoc()): ?>

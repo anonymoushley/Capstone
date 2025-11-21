@@ -1,4 +1,5 @@
 <?php 
+require_once 'config/functions.php';
 $conn = new mysqli("localhost", "root", "", "admission");
 
 $sql = "
@@ -44,28 +45,6 @@ $sql = "
 
 $result = mysqli_query($conn, $sql);
 
-// Function to calculate plus factor based on strand and NCII status
-function calculatePlusFactor($strand, $ncii_status) {
-    $strand = strtolower(trim($strand ?? ''));
-    $ncii_status = strtolower(trim($ncii_status ?? ''));
-    
-    // Check if applicant has NCII certificate (status is 'Accepted')
-    $has_ncii = ($ncii_status === 'accepted');
-    
-    // Check if applicant is from STEM or specific TVL strands (TVL-ICT, TVL-CSS, TVL-PROGRAMMING)
-    $is_stem_it = in_array($strand, ['stem', 'tvl-ict', 'tvl-css', 'tvl-programming', 'stem/it']);
-    
-    // Apply plus factor logic
-    if ($is_stem_it && $has_ncii) {
-        return 5; // STEM/IT strand + NCII = 5
-    } elseif ($is_stem_it && !$has_ncii) {
-        return 3; // STEM/IT strand only = 3
-    } elseif (!$is_stem_it && $has_ncii) {
-        return 1; // NCII only = 1
-    } else {
-        return 0; // None both = 0
-    }
-}
 ?>
 
 <style>
