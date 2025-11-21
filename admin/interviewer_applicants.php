@@ -1,18 +1,54 @@
 <?php
+/**
+ * Interviewer Applicants List
+ * 
+ * Displays list of applicants for interviewers
+ * 
+ * @package Admin
+ */
+
+require_once __DIR__ . '/../config/error_handler.php';
+
 // Database connection
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, true, 'interviewer_main.php');
 }
 
 // Handle interview form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_interview'])) {
-    $applicant_id = $_POST['applicant_id'] ?? null;
-    $communication_skills = floatval($_POST['communication_skills']);
-    $problem_solving = floatval($_POST['problem_solving']);
-    $motivation = floatval($_POST['motivation']);
-    $knowledge = floatval($_POST['knowledge']);
-    $overall_impression = floatval($_POST['overall_impression']);
+    // Verify CSRF token
+    require_once __DIR__ . '/../config/security.php';
+    if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+        $_SESSION['error_message'] = "Invalid request. Please try again.";
+        header("Location: " . $_SERVER['PHP_SELF'] . "?page=interviewer_applicants");
+        exit;
+    }
+    
+    // Validate and sanitize input
+    $applicant_id = isset($_POST['applicant_id']) ? intval($_POST['applicant_id']) : null;
+    if (!$applicant_id || $applicant_id <= 0) {
+        $_SESSION['error_message'] = "Invalid applicant ID.";
+        header("Location: " . $_SERVER['PHP_SELF'] . "?page=interviewer_applicants");
+        exit;
+    }
+    
+    $communication_skills = isset($_POST['communication_skills']) ? floatval($_POST['communication_skills']) : 0;
+    $problem_solving = isset($_POST['problem_solving']) ? floatval($_POST['problem_solving']) : 0;
+    $motivation = isset($_POST['motivation']) ? floatval($_POST['motivation']) : 0;
+    $knowledge = isset($_POST['knowledge']) ? floatval($_POST['knowledge']) : 0;
+    $overall_impression = isset($_POST['overall_impression']) ? floatval($_POST['overall_impression']) : 0;
+    
+    // Validate score ranges (0-100)
+    $scores = [$communication_skills, $problem_solving, $motivation, $knowledge, $overall_impression];
+    foreach ($scores as $score) {
+        if ($score < 0 || $score > 100) {
+            $_SESSION['error_message'] = "Scores must be between 0 and 100.";
+            header("Location: " . $_SERVER['PHP_SELF'] . "?page=interviewer_applicants");
+            exit;
+        }
+    }
     
     // Calculate total score (out of 100)
     $total_score = ($communication_skills + $problem_solving + $motivation + $knowledge + $overall_impression) / 5;
@@ -122,7 +158,10 @@ if ($stmt) {
     }
     if ($stmt->execute()) {
         $result = $stmt->get_result();
-        $applicants = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $applicants = [];
+        while ($row = $result->fetch_assoc()) {
+            $applicants[] = $row;
+        }
     }
 }
 ?>

@@ -1,25 +1,70 @@
 <?php
-session_start();
+/**
+ * Update Stanine Score
+ * 
+ * Updates stanine score for an applicant and recalculates related scores
+ * 
+ * @package Admin
+ */
 
-// Check if user is logged in
+require_once __DIR__ . '/../config/error_handler.php';
+require_once __DIR__ . '/../config/security.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+header('Content-Type: application/json');
+
+// Authorization check
 if (!isset($_SESSION['chair_id']) && !isset($_SESSION['interviewer_id'])) {
+    http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Not authorized']);
     exit;
 }
 
-// Get POST data
-$applicant_id = $_POST['applicant_id'] ?? null;
-$stanine = $_POST['stanine'] ?? null;
-
-if (!$applicant_id || !$stanine) {
-    echo json_encode(['success' => false, 'message' => 'Missing required data']);
+// Verify CSRF token
+if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Invalid request token']);
     exit;
 }
 
-// Use mysqli connection like reports.php
-$conn = new mysqli("localhost", "root", "", "admission");
+// Validate and sanitize POST data
+$applicant_id = isset($_POST['applicant_id']) ? intval($_POST['applicant_id']) : null;
+$stanine = isset($_POST['stanine']) ? trim($_POST['stanine']) : null;
 
-if ($conn->connect_error) {
+if (!$applicant_id || $applicant_id <= 0) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid applicant ID']);
+    exit;
+}
+
+if ($stanine === null || $stanine === '') {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Stanine value is required']);
+    exit;
+}
+
+// Validate stanine value (should be numeric and between 0-100 or 1-9)
+if (!is_numeric($stanine)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Stanine must be a number']);
+    exit;
+}
+
+$stanine_float = floatval($stanine);
+if (($stanine_float < 0 || $stanine_float > 100) && ($stanine_float < 1 || $stanine_float > 9)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Stanine must be between 0-100 or 1-9']);
+    exit;
+}
+
+// Database connection
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
     exit;
 }

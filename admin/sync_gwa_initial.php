@@ -1,12 +1,35 @@
 <?php
-// Ensure screening_results has rows and persist GWA, stanine_score, and initial_total for all applicants
-$conn = new mysqli("localhost", "root", "", "admission");
+/**
+ * Sync GWA Initial Scores
+ * 
+ * Synchronizes GWA, stanine, and initial total scores for all applicants
+ * 
+ * @package Admin
+ */
+
+require_once __DIR__ . '/../config/error_handler.php';
+
+// Authorization check
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['admin_id']) && !isset($_SESSION['chair_id'])) {
+    http_response_code(403);
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'message' => 'Not authorized']);
+    exit;
+}
 
 header('Content-Type: application/json');
 
-if ($conn->connect_error) {
-	echo json_encode(['success' => false, 'message' => 'DB connect failed']);
-	exit;
+// Database connection
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    exit;
 }
 
 try {

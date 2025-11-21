@@ -1,6 +1,22 @@
 <?php 
-require_once 'config/functions.php';
-$conn = new mysqli("localhost", "root", "", "admission");
+/**
+ * General Reports
+ * 
+ * Generates reports for all applicants
+ * 
+ * @package Admin
+ */
+
+require_once __DIR__ . '/../config/functions.php';
+require_once __DIR__ . '/../config/error_handler.php';
+
+// Database connection
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    echo "<div class='alert alert-danger'>System error. Please contact administrator.</div>";
+    exit;
+}
 
 $sql = "
     SELECT
@@ -43,7 +59,12 @@ $sql = "
     ORDER BY pi.last_name, pi.first_name
 ";
 
-$result = mysqli_query($conn, $sql);
+// Use prepared statement (no parameters needed for this query, but safer)
+$result = $conn->query($sql);
+if (!$result) {
+    echo "<div class='alert alert-danger'>Database error. Please contact administrator.</div>";
+    exit;
+}
 
 ?>
 

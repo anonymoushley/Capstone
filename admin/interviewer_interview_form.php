@@ -87,39 +87,76 @@ if ($applicant_id) {
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_interview'])) {
-    // Get applicant_id from POST
-    $applicant_id = $_POST['applicant_id'] ?? null;
-    
-    if (!$applicant_id) {
-        $_SESSION['error_message'] = "Applicant ID is missing.";
+    // Verify CSRF token
+    if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+        $_SESSION['error_message'] = "Invalid request. Please try again.";
         header("Location: interviewer_main.php?page=interviewer_applicants");
         exit;
     }
     
-    // Calculate scores from radio buttons
+    // Validate and sanitize applicant_id
+    $applicant_id = isset($_POST['applicant_id']) ? intval($_POST['applicant_id']) : null;
+    
+    if (!$applicant_id || $applicant_id <= 0) {
+        $_SESSION['error_message'] = "Invalid applicant ID.";
+        header("Location: interviewer_main.php?page=interviewer_applicants");
+        exit;
+    }
+    
+    // Calculate scores from radio buttons with validation
     $section1_total = 0;
     $section2_total = 0;
     $section3_total = 0;
     $writing_score = 0;
-    $reading_score = intval($_POST['reading_score'] ?? 0);
+    $reading_score = isset($_POST['reading_score']) ? intval($_POST['reading_score']) : 0;
+    
+    // Validate reading_score range (0-20)
+    if ($reading_score < 0 || $reading_score > 20) {
+        $_SESSION['error_message'] = "Reading score must be between 0 and 20.";
+        header("Location: interviewer_main.php?page=interviewer_applicants");
+        exit;
+    }
     
     // Section 1: Preparedness (4 items, max 5 each = 20 points)
     for ($i = 0; $i < 4; $i++) {
-        $section1_total += intval($_POST["section1_item$i"] ?? 0);
+        $score = isset($_POST["section1_item$i"]) ? intval($_POST["section1_item$i"]) : 0;
+        if ($score < 0 || $score > 5) {
+            $_SESSION['error_message'] = "Section 1 scores must be between 0 and 5.";
+            header("Location: interviewer_main.php?page=interviewer_applicants");
+            exit;
+        }
+        $section1_total += $score;
     }
     
     // Section 2: Communication Skills (4 items, max 5 each = 20 points)
     for ($i = 0; $i < 4; $i++) {
-        $section2_total += intval($_POST["section2_item$i"] ?? 0);
+        $score = isset($_POST["section2_item$i"]) ? intval($_POST["section2_item$i"]) : 0;
+        if ($score < 0 || $score > 5) {
+            $_SESSION['error_message'] = "Section 2 scores must be between 0 and 5.";
+            header("Location: interviewer_main.php?page=interviewer_applicants");
+            exit;
+        }
+        $section2_total += $score;
     }
     
     // Section 3: Personal/Physical/Social Traits (4 items, max 5 each = 20 points)
     for ($i = 0; $i < 4; $i++) {
-        $section3_total += intval($_POST["section3_item$i"] ?? 0);
+        $score = isset($_POST["section3_item$i"]) ? intval($_POST["section3_item$i"]) : 0;
+        if ($score < 0 || $score > 5) {
+            $_SESSION['error_message'] = "Section 3 scores must be between 0 and 5.";
+            header("Location: interviewer_main.php?page=interviewer_applicants");
+            exit;
+        }
+        $section3_total += $score;
     }
     
     // Writing Skills (max 20 points)
-    $writing_score = intval($_POST['writing_score'] ?? 0);
+    $writing_score = isset($_POST['writing_score']) ? intval($_POST['writing_score']) : 0;
+    if ($writing_score < 0 || $writing_score > 20) {
+        $_SESSION['error_message'] = "Writing score must be between 0 and 20.";
+        header("Location: interviewer_main.php?page=interviewer_applicants");
+        exit;
+    }
     
     // Total Score (out of 100)
     $total_score = $section1_total + $section2_total + $section3_total + $writing_score + $reading_score;

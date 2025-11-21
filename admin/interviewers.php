@@ -6,7 +6,12 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // DB connection
-$conn = new mysqli("localhost", "root", "", "admission");
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, true, 'chair_main.php');
+}
 
 // PHPMailer imports
 require_once '../vendor/autoload.php';
@@ -15,20 +20,54 @@ use PHPMailer\PHPMailer\Exception;
 
 $chairperson_id = $_SESSION['chair_id'] ?? null;
 
-// Debug information (remove in production)
+// Authorization check
 if (!$chairperson_id) {
     // Check if session exists but chair_id is not set
     if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'chairperson') {
-        die("Access denied. Invalid user type. Expected: chairperson, Got: " . $_SESSION['user_type']);
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Access denied. Invalid user type.']);
+        exit;
     }
-    die("Access denied. Chairperson not logged in. Session data: " . print_r($_SESSION, true));
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Access denied. Chairperson not logged in.']);
+    exit;
 }
 
 // Handle Add
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === "add") {
-  $last_name = strtoupper(trim($_POST['last_name']));
-  $first_name = strtoupper(trim($_POST['first_name']));
-  $email = trim($_POST['email']);
+  // Verify CSRF token
+  require_once __DIR__ . '/../config/security.php';
+  if (!isset($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+    $_SESSION['error_message'] = "Invalid request. Please try again.";
+    header("Location: " . $_SERVER['PHP_SELF'] . "?page=interviewers");
+    exit;
+  }
+  
+  // Validate and sanitize input
+  $last_name = isset($_POST['last_name']) ? strtoupper(trim($_POST['last_name'])) : '';
+  $first_name = isset($_POST['first_name']) ? strtoupper(trim($_POST['first_name'])) : '';
+  $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+  
+  // Validate required fields
+  if (empty($last_name) || empty($first_name) || empty($email)) {
+    $_SESSION['error_message'] = "All fields are required.";
+    header("Location: " . $_SERVER['PHP_SELF'] . "?page=interviewers");
+    exit;
+  }
+  
+  // Validate email format
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['error_message'] = "Invalid email format.";
+    header("Location: " . $_SERVER['PHP_SELF'] . "?page=interviewers");
+    exit;
+  }
+  
+  // Validate name length
+  if (strlen($last_name) > 100 || strlen($first_name) > 100) {
+    $_SESSION['error_message'] = "Name fields are too long.";
+    header("Location: " . $_SERVER['PHP_SELF'] . "?page=interviewers");
+    exit;
+  }
   
   // Generate 6-character temporary password (3 letters + 3 numbers)
   $letters = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 3);

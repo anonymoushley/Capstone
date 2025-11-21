@@ -1,8 +1,20 @@
 <?php
+/**
+ * Interviewer Dashboard
+ * 
+ * Displays statistics and overview for interviewers
+ * 
+ * @package Admin
+ */
+
+require_once __DIR__ . '/../config/error_handler.php';
+
 // Database connection
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    echo "<div class='alert alert-danger'>System error. Please contact administrator.</div>";
+    exit;
 }
 
 // Get interviewer info
@@ -29,9 +41,15 @@ $totalSql = "SELECT COUNT(DISTINCT r.id) AS total
                  FROM exam_answers
                  GROUP BY applicant_id
              ) latest_ea ON ea.applicant_id = latest_ea.applicant_id AND ea.submitted_at = latest_ea.latest_submitted";
-$totalResult = mysqli_query($conn, $totalSql);
-if ($totalResult) {
-    $totalApplicants = mysqli_fetch_assoc($totalResult)['total'] ?? 0;
+// Use prepared statement for security
+$totalStmt = $conn->prepare($totalSql);
+if ($totalStmt) {
+    $totalStmt->execute();
+    $totalResult = $totalStmt->get_result();
+    $totalApplicants = $totalResult->fetch_assoc()['total'] ?? 0;
+    $totalStmt->close();
+} else {
+    $totalApplicants = 0;
 }
 
 // Get completed interviews count (applicants who completed exam and have been interviewed)
@@ -47,9 +65,18 @@ $completedSql = "SELECT COUNT(DISTINCT r.id) AS completed
                  ) latest_ea ON ea.applicant_id = latest_ea.applicant_id AND ea.submitted_at = latest_ea.latest_submitted
                  WHERE sr.interview_total_score IS NOT NULL
                  AND sr.interview_total_score > 0";
-$completedResult = mysqli_query($conn, $completedSql);
-if ($completedResult) {
-    $completedInterviews = mysqli_fetch_assoc($completedResult)['completed'] ?? 0;
+$completedStmt = $conn->prepare($completedSql);
+if ($completedStmt) {
+    $completedStmt->execute();
+    $completedResult = $completedStmt->get_result();
+    if ($completedResult) {
+        $completedInterviews = $completedResult->fetch_assoc()['completed'] ?? 0;
+    } else {
+        $completedInterviews = 0;
+    }
+    $completedStmt->close();
+} else {
+    $completedInterviews = 0;
 }
 
 // Get pending interviews count (eligible but not yet completed)
