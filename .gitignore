@@ -1,0 +1,221 @@
+# ================================
+# OS FILES
+# ================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX/
+
+# Linux
+*~
+.nfs*
+
+# ================================
+# ENVIRONMENT / SECRETS
+# ================================
+.env
+.env.* 
+*.env
+*.env.local
+*.secret
+*.key
+*.pem
+*.cert
+
+# ================================
+# LOGS
+# ================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ================================
+# NODE / FRONTEND BUILD FILES
+# ================================
+node_modules/
+dist/
+build/
+.cache/
+.next/
+out/
+coverage/
+bower_components/
+
+# ================================
+# PACKAGE MANAGERS
+# ================================
+# pnpm
+.pnpm-store/
+
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.yarnrc.yml
+
+# ================================
+# PHP / LARAVEL
+# ================================
+vendor/
+composer.lock
+*.cache
+
+# ================================
+# PYTHON
+# ================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+pip-log.txt
+pip-delete-this-directory.txt
+.env/
+.venv/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints
+
+# ================================
+# JAVA / KOTLIN
+# ================================
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.iws
+*.ipr
+target/
+
+# ================================
+# FLUTTER / DART
+# ================================
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+build/
+
+# ================================
+# ANDROID / MOBILE
+# ================================
+*.keystore
+*.jks
+android/.gradle/
+android/.idea/
+android/local.properties
+ios/Pods/
+*.xcworkspace
+DerivedData/
+*.xcuserstate
+
+# ================================
+# VISUAL STUDIO / C# / .NET
+# ================================
+bin/
+obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+
+# ================================
+# C / C++
+# ================================
+*.out
+*.o
+*.obj
+*.exe
+*.dll
+
+# ================================
+# IDEs / EDITORS
+# ================================
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# IntelliJ / PhpStorm / PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.cproject
+.settings/
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+# ================================
+# MISC
+# ================================
+*.swp
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+
+# Archives
+*.zip
+*.tar
+*.gz
+*.rar
+
+# ================================
+# GIT SPECIFIC
+# ================================
+*.lock
+*.patch
+*.diff
+.gitignore.lock
+
+# ================================
+# FRAMEWORK / CMS (if used)
+# ================================
+# React Native
+.expo/
+.expo-shared/
+
+# Vue / Vite
+vite.config.ts.timestamp-*
+
+# Django
+*.sqlite3
+staticfiles/
+media/
+
+# Laravel
+.storage/
