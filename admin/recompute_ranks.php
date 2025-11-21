@@ -18,8 +18,12 @@ if ($applicantId <= 0) {
     exit;
 }
 
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    http_response_code(500);
+    header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
     exit;
 }

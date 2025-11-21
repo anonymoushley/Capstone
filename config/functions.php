@@ -1,6 +1,12 @@
 <?php
 /**
  * Common utility functions used across the application
+ * 
+ * This file contains reusable functions that are used throughout the system
+ * to reduce code duplication and improve maintainability.
+ * 
+ * @package Config
+ * @version 1.0
  */
 
 /**
@@ -43,14 +49,16 @@ function sanitize($data) {
 /**
  * Get database connection (mysqli)
  * @return mysqli The database connection
+ * @throws Exception If connection fails
  */
 function getDBConnection() {
     static $conn = null;
     if ($conn === null) {
         $conn = new mysqli('localhost', 'root', '', 'admission');
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            throw new Exception("Database connection failed: " . $conn->connect_error);
         }
+        $conn->set_charset("utf8mb4");
     }
     return $conn;
 }

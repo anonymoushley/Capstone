@@ -14,9 +14,11 @@ if ($_SESSION['role'] !== 'student') {
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 $allowed_pages = ['dashboard', 'profiling', 'documents', 'notifications', 'support', 'account_settings', 'settings', 'my_account'];
 
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, true, 'login.php');
 }
 
 $user_id = $_SESSION['user_id'];

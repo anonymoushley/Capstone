@@ -155,11 +155,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['google_status_submit'
             : ($google_user['last_name'] ?: '');
         
         // Database connection
-        $conn = new mysqli('localhost', 'root', '', 'admission');
-        if ($conn->connect_error) {
-            $_SESSION['error_message'] = "Database connection failed.";
-            header("Location: register.php");
-            exit();
+        try {
+            $conn = getDBConnection();
+        } catch (Exception $e) {
+            handleError("System error. Please try again later.", $e->getMessage(), 500, true, 'register.php');
         }
         
         // Check if user already exists
@@ -245,9 +244,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['google_status_submit'
 }
 
 // Database connection
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, true, 'register.php');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

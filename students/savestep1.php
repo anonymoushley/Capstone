@@ -2,7 +2,10 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die(json_encode(['success' => false, 'message' => 'Invalid request method']));
+    http_response_code(405);
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+    exit();
 }
 
 // Check if required fields are present
@@ -16,16 +19,23 @@ foreach ($required_fields as $field) {
 }
 
 if (!empty($missing_fields)) {
-    die(json_encode(['success' => false, 'message' => 'Missing required fields: ' . implode(', ', $missing_fields)]));
+    http_response_code(400);
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'message' => 'Missing required fields: ' . implode(', ', $missing_fields)]);
+    exit();
 }
 
 require_once '../config/database.php';
+require_once '../config/error_handler.php';
 
 // Test database connection
 try {
     $pdo->query("SELECT 1");
 } catch (PDOException $e) {
-    die(json_encode(['success' => false, 'message' => 'Database connection failed']));
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    exit();
 }
 
 try {

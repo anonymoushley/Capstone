@@ -1,22 +1,34 @@
 <?php
+/**
+ * Exam Submission Handler
+ * 
+ * Processes and saves exam answers submitted by students.
+ * Calculates scores, validates answers, and stores results in the database.
+ * 
+ * @package Students
+ */
+
 session_start(); // Important: make sure session is started
 
 // Get applicant ID from session or fallback POST
 $applicant_id = $_SESSION['user_id'] ?? $_POST['user_id'] ?? null;
 if (!$applicant_id) {
-    die("Unauthorized access.");
+    require_once __DIR__ . '/../config/error_handler.php';
+    handleError("Unauthorized access.", "Unauthorized exam submission attempt", 401, false);
 }
 
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, false);
 }
 
-$version_id = $_POST['exam_version_id'] ?? null;
+$version_id = isset($_POST['exam_version_id']) ? intval($_POST['exam_version_id']) : null;
 $answers = $_POST['answers'] ?? [];
 
-if (!$version_id || empty($answers)) {
-    die("No exam version or answers submitted.");
+if (!$version_id || $version_id <= 0 || empty($answers) || !is_array($answers)) {
+    handleError("Invalid exam data submitted.", "Missing exam version or answers", 400, false);
 }
 
 // Check for duplicate aggregated submission
@@ -234,9 +246,14 @@ foreach ($answers as $qid => $ans) {
 }
 
 // Insert aggregated row into exam_answers
-$insertAgg = $conn->prepare("INSERT INTO exam_answers (applicant_id, version_id, total_questions, points_earned, points_possible) VALUES (?, ?, ?, ?, ?)");
-if (!$insertAgg) {
-    die("Prepare failed: " . $conn->error);
+try {
+    $insertAgg = $conn->prepare("INSERT INTO exam_answers (applicant_id, version_id, total_questions, points_earned, points_possible) VALUES (?, ?, ?, ?, ?)");
+    if (!$insertAgg) {
+        throw new Exception("Prepare failed: " . $conn->error);
+    }
+} catch (Exception $e) {
+    require_once __DIR__ . '/../config/error_handler.php';
+    handleError("System error. Please try again later.", $e->getMessage(), 500, false);
 }
 $points_possible = (float)$total_points_possible;
 $insertAgg->bind_param("iiidd", $applicant_id, $version_id, $total_questions, $points_earned, $points_possible);

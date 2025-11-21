@@ -3,13 +3,16 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$conn = new mysqli('localhost', 'root', '', 'admission');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    handleError("System error. Please try again later.", $e->getMessage(), 500, true, 'exam-management.php');
 }
 
 if (!isset($_SESSION['chair_id'])) {
-    die("Unauthorized access.");
+    require_once __DIR__ . '/../config/error_handler.php';
+    handleError("Unauthorized access.", "Unauthorized exam version access attempt", 403, true, 'exam-management.php');
 }
 
 $chairperson_id = $_SESSION['chair_id']; // ✅ use consistent session key

@@ -1,4 +1,13 @@
 <?php
+/**
+ * Student Profiling Form
+ * 
+ * Multi-step form for students to complete their application profile.
+ * Includes personal information, socio-demographic data, academic background,
+ * program application, and document uploads.
+ * 
+ * @package Students
+ */
 
 if (session_status() === PHP_SESSION_NONE) {
      session_start();
@@ -26,7 +35,12 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
-// Function to get all submitted data for the user
+/**
+ * Get all submitted data for a user
+ * @param PDO $pdo Database connection
+ * @param int $user_id User ID
+ * @return array Array containing personal_info, socio_demographic, academic_background, program_application, and documents
+ */
 function getAllSubmittedData($pdo, $user_id) {
     $data = [];
     

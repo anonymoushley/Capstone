@@ -3,8 +3,10 @@ require_once __DIR__ . '/../config/security.php';
 initSecureSession();
 requireAuth('admin', '../admin/chair_login.php');
 
-$conn = new mysqli("localhost", "root", "", "admission");
-if ($conn->connect_error) {
+require_once __DIR__ . '/../config/error_handler.php';
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
     http_response_code(500);
     echo "Connection failed";
     exit;
